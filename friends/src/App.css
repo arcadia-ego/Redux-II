@@ -21,6 +21,12 @@
 .App-intro {
   font-size: large;
 }
+.notFriend {
+  color: red;
+}
+.stillFriend{
+  color: green;
+}
 
 .friendsList {
   display: flex;

@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 
-
 import './App.css';
 import logo from './logo.svg';
-import { getFriends } from './actions/getFriends';
+import { getFriends, toggleFriend } from './actions/getFriends';
 
 class App extends Component {
   componentDidMount() {
+    // console.log(this.props)
     this.props.getFriends();
   }
+
 
   render() {
     return (
@@ -21,7 +22,9 @@ class App extends Component {
           <div className="friendsList">
             <ul>
               {this.props.friends.map(friend => {
-                return <li className="indivFriend" key={friend.id}> {friend.name} </li>
+                return <li onClick={ (event) => this.props.toggleFriend(friend.id)} className={friend.toggledFriend ? 'stillFriend' : 'notFriend' } key={friend.id}>
+                 {friend.name} {friend.age} {friend.email}
+                 </li>
               })}
             </ul>
           </div>
@@ -31,13 +34,14 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({getFriends, friends, error}) => {
+  // console.log(getFriends)
   return {
-    getFriends: state.fetching,
-    friends: state.friends,
-    error: state.error
+    gotFriends: getFriends,
+    friends,
+    error,
   }
 }
 
 
-export default connect(mapStateToProps, { getFriends })(App);
+export default connect(mapStateToProps, { getFriends, toggleFriend })(App);
